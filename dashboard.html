@@ -1,60 +1,73 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+
+// Import Components for each page
 import Overview from './Overview';
 import Departments from './Departments';
 import ConsultationCases from './ConsultationCases';
 import Resources from './Resources';
 
-const Dashboard = () => {
-  const [activeMenu, setActiveMenu] = useState('overview');
+const App = () => {
+  return (
+    <Router>
+      <div className="sidebar">
+        <ul>
+          <li><Link to="/">Overview</Link></li>
+          <li><Link to="/departments">Departments</Link></li>
+          <li><Link to="/consultation-cases">Consultation Cases</Link></li>
+          <li><Link to="/resources">Resources</Link></li>
+        </ul>
+      </div>
+      <div className="content">
+        <Switch>
+          <Route path="/" exact component={Overview} />
+          <Route path="/departments" component={Departments} />
+          <Route path="/consultation-cases" component={ConsultationCases} />
+          <Route path="/resources" component={Resources} />
+        </Switch>
+      </div>
+    </Router>
+  );
+};
 
-  const renderContent = () => {
-    switch (activeMenu) {
-      case 'overview':
-        return <Overview />;
-      case 'departments':
-        return <Departments />;
-      case 'consultationCases':
-        return <ConsultationCases />;
-      case 'resources':
-        return <Resources />;
-      default:
-        return <Overview />;
-    }
-  };
+export default App;
 
+// Overview Component
+const Overview = () => {
   return (
     <div>
-      <nav>
-        <ul>
-          <li onClick={() => setActiveMenu('overview')}>Overview</li>
-          <li onClick={() => setActiveMenu('departments')}>Departments</li>
-          <li onClick={() => setActiveMenu('consultationCases')}>Consultation Cases</li>
-          <li onClick={() => setActiveMenu('resources')}>Resources</li>
-        </ul>
-      </nav>
-      <div>{renderContent()}</div>
+      <h1>KPIs and Charts</h1>
+      {/* Render KPI Cards and Charts Here */}
     </div>
   );
 };
 
-export default Dashboard;
-
-// Overview Component
-const Overview = () => {
-  return <div>/* Overview Page with KPIs and Charts */</div>;
-};
-
 // Departments Component
 const Departments = () => {
-  return <div>/* Departments Page with Detailed Information */</div>;
+  return (
+    <div>
+      <h1>Department Information</h1>
+      {/* Render Detailed Department Information Here */}
+    </div>
+  );
 };
 
 // Consultation Cases Component
 const ConsultationCases = () => {
-  return <div>/* Full Table of Consultation Cases */</div>;
+  return (
+    <div>
+      <h1>Consultation Cases</h1>
+      {/* Render Consultation Cases Table Here */}
+    </div>
+  );
 };
 
 // Resources Component
 const Resources = () => {
-  return <div>/* Educational Content Cards */</div>;
+  return (
+    <div>
+      <h1>Educational Resources</h1>
+      {/* Render Educational Content Cards Here */}
+    </div>
+  );
 };
