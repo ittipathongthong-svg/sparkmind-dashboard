@@ -1,73 +1,60 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sparkmind Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .menu { margin: 10px; }
+        .menu-item { margin: 5px; cursor: pointer; }
+        .content { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        const App = () => {
+            const [activePage, setActivePage] = React.useState('Overview');
 
-// Import Components for each page
-import Overview from './Overview';
-import Departments from './Departments';
-import ConsultationCases from './ConsultationCases';
-import Resources from './Resources';
+            const renderPage = () => {
+                switch (activePage) {
+                    case 'Overview':
+                        return <Overview />;
+                    case 'Departments':
+                        return <Departments />;
+                    case 'Consultation Cases':
+                        return <ConsultationCases />;
+                    case 'Resources':
+                        return <Resources />;
+                    default:
+                        return <Overview />;
+                }
+            };
 
-const App = () => {
-  return (
-    <Router>
-      <div className="sidebar">
-        <ul>
-          <li><Link to="/">Overview</Link></li>
-          <li><Link to="/departments">Departments</Link></li>
-          <li><Link to="/consultation-cases">Consultation Cases</Link></li>
-          <li><Link to="/resources">Resources</Link></li>
-        </ul>
-      </div>
-      <div className="content">
-        <Switch>
-          <Route path="/" exact component={Overview} />
-          <Route path="/departments" component={Departments} />
-          <Route path="/consultation-cases" component={ConsultationCases} />
-          <Route path="/resources" component={Resources} />
-        </Switch>
-      </div>
-    </Router>
-  );
-};
+            return (
+                <div>
+                    <div className="menu">
+                        {['Overview', 'Departments', 'Consultation Cases', 'Resources'].map(page => (
+                            <div className="menu-item" onClick={() => setActivePage(page)}>{page}</div>
+                        ))}
+                    </div>
+                    <div className="content">
+                        {renderPage()}
+                    </div>
+                </div>
+            );
+        };
 
-export default App;
+        const Overview = () => (<div><h2>Overview</h2><p>Mock data for Overview.</p></div>);
+        const Departments = () => (<div><h2>Departments</h2><p>Mock data for Departments.</p></div>);
+        const ConsultationCases = () => (<div><h2>Consultation Cases</h2><p>Mock data for Consultation Cases.</p></div>);
+        const Resources = () => (<div><h2>Resources</h2><p>Mock data for Resources.</p></div>);
 
-// Overview Component
-const Overview = () => {
-  return (
-    <div>
-      <h1>KPIs and Charts</h1>
-      {/* Render KPI Cards and Charts Here */}
-    </div>
-  );
-};
-
-// Departments Component
-const Departments = () => {
-  return (
-    <div>
-      <h1>Department Information</h1>
-      {/* Render Detailed Department Information Here */}
-    </div>
-  );
-};
-
-// Consultation Cases Component
-const ConsultationCases = () => {
-  return (
-    <div>
-      <h1>Consultation Cases</h1>
-      {/* Render Consultation Cases Table Here */}
-    </div>
-  );
-};
-
-// Resources Component
-const Resources = () => {
-  return (
-    <div>
-      <h1>Educational Resources</h1>
-      {/* Render Educational Content Cards Here */}
-    </div>
-  );
-};
+        ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+</body>
+</html>
